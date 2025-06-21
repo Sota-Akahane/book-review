@@ -27,35 +27,34 @@ public class BookRepository {
         return book;
     };
 
-    private static final ResultSetExtractor<List<Book>> BOOK_RESULT_SET_EXTRACTOR
+    /**
+     * 二つのテーブルを結合して処理する場合に使用するResultSetExtractor.
+     * 一件検索に特化させるために、型をリストにしていない。
+     */
+    private static final ResultSetExtractor<Book> BOOK_RESULT_SET_EXTRACTOR
             = (rs) -> {
 
-        Map<Integer, Book> bookMap = new LinkedHashMap<>();
-
+        Book book = null;
         while (rs.next()) {
-            Integer bookId = rs.getInt("b_id");
-            Book book = bookMap.get(bookId);
-
             if (book == null) {
                 book = new Book();
-                book.setId(bookId);
+                book.setId(rs.getInt("b_id"));
                 book.setTitle(rs.getString("b_title"));
                 book.setAuthor(rs.getString("b_author"));
                 book.setReviews(new ArrayList<>());
-
-                bookMap.put(bookId, book);
             }
 
-            Review review = new Review();
-            review.setId(rs.getInt("r_id"));
-            review.setBookId(rs.getInt("b_id"));
-            review.setRate(rs.getInt("r_rate"));
-            review.setComment(rs.getString("r_comment"));
-
-            book.getReviews().add(review);
+            Integer reviewId = rs.getInt("r_id");
+            if (reviewId != null) {
+                Review review = new Review();
+                review.setId(rs.getInt("r_id"));
+                review.setRate(rs.getInt("r_rate"));
+                review.setComment(rs.getString("r_comment"));
+                book.getReviews().add(review);
+            }
         }
 
-        return new ArrayList<>(bookMap.values());
+        return book;
     };
 
     /**
@@ -88,5 +87,25 @@ public class BookRepository {
                 .addValue("author", author);
 
         template.update(sql, param);
+    }
+
+    /**
+     * 主キーで書籍を検索します.
+     * 二つのテーブルを結合して検索するので、レビューの一覧を保持した情報を返します。
+     *
+     * @param id 書籍ID
+     * @return レビューリストを持ったBookオブジェクト
+     */
+    public Book findById(Integer id) {
+        String sql = """
+                SELECT b.id AS b_id,b.title AS b_title,b.author AS b_author,
+                 r.id AS r_id,r.rate AS r_rate,r.comment AS r_comment
+                 FROM books AS b LEFT OUTER JOIN reviews AS r ON b.id=r.book_id
+                 WHERE b.id=:id
+                """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+
+        return template.query(sql, param, BOOK_RESULT_SET_EXTRACTOR);
     }
 }

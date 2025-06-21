@@ -39,4 +39,14 @@ public class BookService {
 
         bookRepository.insert(title, author);
     }
+
+    /**
+     * 主キーで一件検索をします.
+     *
+     * @param bookId 書籍ID
+     * @return 書籍情報
+     */
+    public Book searchById(Integer bookId) {
+        return bookRepository.findById(bookId);
+    }
 }

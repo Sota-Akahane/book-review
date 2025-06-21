@@ -46,4 +46,12 @@ public class BookController {
         return "redirect:/showBookList";
     }
 
+    @GetMapping("/showBookDetail")
+    public String showBookDetail(Integer id, Model model) {
+        Book book = bookService.searchById(id);
+        model.addAttribute("book", book);
+
+        return "book_detail";
+    }
+
 }

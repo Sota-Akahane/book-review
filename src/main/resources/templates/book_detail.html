@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>book review</title>
+  </head>
+  <body>
+    <header>
+      <a th:href="@{/showBookList}">書籍一覧</a>
+      <a th:href="@{/toBookForm}">書籍を追加</a>
+    </header>
+    <h1>書籍詳細</h1>
+    <div class="container">
+      <div>タイトル：<span th:text="${book.title}">タイトル</span></div>
+      <div>著者名：<span th:text="${book.author}">著者名</span></div>
+      <div th:each="review : ${book.reviews}">
+        <div th:text="${review.comment}">レビュー内容</div>
+        <div th:text="${review.rate}">評価</div>
+        <hr />
+      </div>
+    </div>
+  </body>
+</html>
