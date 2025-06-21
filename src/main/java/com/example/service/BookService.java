@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.domain.Book;
+import com.example.form.BookForm;
 import com.example.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,17 @@ public class BookService {
      */
     public List<Book> showBookList() {
         return bookRepository.findAll();
+    }
+
+    /**
+     * 書籍を追加します.
+     *
+     * @param bookForm フォーム
+     */
+    public void addBook(BookForm bookForm) {
+        String title = bookForm.getTitle();
+        String author = bookForm.getAuthor();
+
+        bookRepository.insert(title, author);
     }
 }
