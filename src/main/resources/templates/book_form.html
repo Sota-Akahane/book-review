@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>book review</title>
+  </head>
+  <body>
+    <h1>書籍を追加</h1>
+    <form
+      action="book_list.html"
+      th:action="@{/addBook}"
+      method="post"
+      th:object="${bookForm}"
+    >
+      <label for="title">タイトル</label>
+      <div class="error-message" th:errors="*{title}">
+        タイトルを入力してください
+      </div>
+      <input type="text" name="title" id="title" th:field="*{title}" /><br />
+      <label for="author">著者名</label>
+      <div class="error-message" th:errors="*{author}">
+        著者名を入力してください
+      </div>
+      <input type="text" name="author" id="author" th:field="*{author}" /><br />
+      <button>追加</button>
+    </form>
+  </body>
+</html>

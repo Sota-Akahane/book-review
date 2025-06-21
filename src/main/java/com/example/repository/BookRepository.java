@@ -5,7 +5,9 @@ import com.example.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -67,5 +69,24 @@ public class BookRepository {
                 """;
 
         return template.query(sql, BOOK_ROW_MAPPER);
+    }
+
+    /**
+     * 書籍を追加します.
+     *
+     * @param title  書籍タイトル
+     * @param author 著者名
+     */
+    public void insert(String title, String author) {
+        String sql = """
+                INSERT INTO books(title, author) VALUES (:title,:author)
+                """;
+
+        SqlParameterSource param
+                = new MapSqlParameterSource()
+                .addValue("title", title)
+                .addValue("author", author);
+
+        template.update(sql, param);
     }
 }
