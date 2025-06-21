@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>book review</title>
+  </head>
+  <body>
+    <header>
+      <a th:href="@{/toBookList}">書籍一覧</a>
+      <a th:href="@{/addBook}">書籍を追加</a>
+    </header>
+    <h1>書籍一覧</h1>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <td>タイトル</td>
+            <td>著者名</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="book : ${bookList}">
+            <td th:text="${book.title}">タイトル</td>
+            <td th:text="${book.author}">著者名</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

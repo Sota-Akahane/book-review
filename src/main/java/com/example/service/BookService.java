@@ -1,0 +1,29 @@
+package com.example.service;
+
+import com.example.domain.Book;
+import com.example.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 本に関係する機能の業務処理を行うサービスクラスです.
+ */
+@Service
+@Transactional
+public class BookService {
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    /**
+     * 本の一覧を取得します.
+     *
+     * @return 本の一覧
+     */
+    public List<Book> showBookList() {
+        return bookRepository.findAll();
+    }
+}

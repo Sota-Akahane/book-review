@@ -1,0 +1,23 @@
+DROP TABLE IF EXISTS books CASCADE;
+CREATE TABLE books(
+id serial primary key,
+title text,
+author text
+);
+
+DROP TABLE IF EXISTS reviews CASCADE;
+CREATE TABLE reviews(
+id serial primary key,
+book_id integer,
+rate integer,
+comment text,
+FOREIGN KEY(book_id) REFERENCES books(id)
+);
+
+INSERT INTO books(title, author) VALUES ('こころ', '夏目漱石');
+INSERT INTO books(title, author) VALUES ('人間失格', '太宰治');
+INSERT INTO books(title, author) VALUES ('羅生門', '芥川龍之介');
+INSERT INTO reviews(book_id, rate, comment) VALUES (
+1, 4, '登場人物の心情の移り変わりが繊細に描かれており、ついのめり込んでしまう作品でした。衝撃的な展開も含めて読み応えがありました。');
+INSERT INTO reviews(book_id, rate, comment) VALUES (
+3, 3, '一度読み終えたあと、もう一度読み返したくなる作品でした。そもそもの前提に疑問を持って読むと楽しめると思います。');
