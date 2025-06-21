@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.domain.Book;
 import com.example.form.BookForm;
+import com.example.form.ReviewForm;
 import com.example.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,8 +48,9 @@ public class BookController {
     }
 
     @GetMapping("/showBookDetail")
-    public String showBookDetail(Integer id, Model model) {
+    public String showBookDetail(Integer id, Model model, ReviewForm reviewForm) {
         Book book = bookService.searchById(id);
+        model.addAttribute("bookId", id);
         model.addAttribute("book", book);
 
         return "book_detail";
