@@ -20,7 +20,12 @@
         </thead>
         <tbody>
           <tr th:each="book : ${bookList}">
-            <td th:text="${book.title}">タイトル</td>
+            <td>
+              <a
+                th:href="@{/showBookDetail?id=} + ${book.id}"
+                th:text="${book.title}"
+              ></a>
+            </td>
             <td th:text="${book.author}">著者名</td>
           </tr>
         </tbody>
