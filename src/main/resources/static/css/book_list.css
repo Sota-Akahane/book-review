@@ -1,0 +1,50 @@
+/* 見出し */
+h1 {
+  text-align: center;
+  margin: 30px 0 20px;
+  font-size: 28px;
+}
+
+/* 書籍リスト */
+.book-list {
+  width: 80%;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f0f0f0;
+}
+
+th,
+td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+td a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+td a:hover {
+  text-decoration: underline;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tbody tr:hover {
+  background-color: #f1f7ff;
+}

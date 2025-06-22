@@ -44,7 +44,7 @@ public class BookRepository {
                 book.setReviews(new ArrayList<>());
             }
 
-            Integer reviewId = rs.getInt("r_id");
+            Integer reviewId = (Integer) rs.getObject("r_bookId");
             if (reviewId != null) {
                 Review review = new Review();
                 review.setId(rs.getInt("r_id"));
@@ -99,7 +99,7 @@ public class BookRepository {
     public Book findById(Integer id) {
         String sql = """
                 SELECT b.id AS b_id,b.title AS b_title,b.author AS b_author,
-                 r.id AS r_id,r.rate AS r_rate,r.comment AS r_comment
+                 r.id AS r_id,r.book_id AS r_bookId,r.rate AS r_rate,r.comment AS r_comment
                  FROM books AS b LEFT OUTER JOIN reviews AS r ON b.id=r.book_id
                  WHERE b.id=:id
                 """;

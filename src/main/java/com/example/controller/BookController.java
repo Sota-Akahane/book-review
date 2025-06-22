@@ -53,6 +53,12 @@ public class BookController {
         model.addAttribute("bookId", id);
         model.addAttribute("book", book);
 
+        if(book.getReviews().isEmpty()) {
+            System.out.println("empty");
+        }
+
+        System.out.println(book.getReviews());
+
         return "book_detail";
     }
 

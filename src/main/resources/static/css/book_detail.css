@@ -1,0 +1,40 @@
+/* 書籍詳細カード */
+.detail-card {
+  width: 60%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
+.detail-card p {
+  margin: 10px 0;
+}
+
+/* レビュー一覧セクション */
+.review-section {
+  width: 60%;
+  margin: 30px auto;
+}
+
+.review-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.review-card {
+  background-color: #fff;
+  border-left: 4px solid #4a90e2;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.review-card span {
+  color: #f5b301; /* ゴールド */
+  font-size: 18px;
+  letter-spacing: 2px;
+}

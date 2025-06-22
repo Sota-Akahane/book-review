@@ -2,34 +2,43 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/form.css}" />
+    <link rel="stylesheet" th:href="@{/css/book_list.css}" />
+    <link rel="stylesheet" th:href="@{/css/book_detail.css}" />
     <title>book review</title>
   </head>
   <body>
     <header>
-      <a th:href="@{/showBookList}">書籍一覧</a>
-      <a th:href="@{/toBookForm}">書籍を追加</a>
+      <nav class="navbar">
+        <a th:href="@{/showBookList}">書籍一覧</a>
+        <a th:href="@{/toBookForm}">書籍を追加</a>
+      </nav>
     </header>
-    <h1>書籍一覧</h1>
-    <div class="container">
-      <table>
-        <thead>
-          <tr>
-            <td>タイトル</td>
-            <td>著者名</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="book : ${bookList}">
-            <td>
-              <a
-                th:href="@{/showBookDetail?id=} + ${book.id}"
-                th:text="${book.title}"
-              ></a>
-            </td>
-            <td th:text="${book.author}">著者名</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
+    <main>
+      <h1>書籍一覧</h1>
+      <div class="book-list">
+        <table>
+          <thead>
+            <tr>
+              <th>タイトル</th>
+              <th>著者名</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="book : ${bookList}">
+              <td>
+                <a
+                  th:href="@{/showBookDetail?id=} + ${book.id}"
+                  th:text="${book.title}"
+                ></a>
+              </td>
+              <td th:text="${book.author}">著者名</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
   </body>
 </html>

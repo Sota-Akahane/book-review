@@ -2,56 +2,94 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/form.css}" />
+    <link rel="stylesheet" th:href="@{/css/book_list.css}" />
+    <link rel="stylesheet" th:href="@{/css/book_detail.css}" />
     <title>book review</title>
   </head>
   <body>
     <header>
-      <a th:href="@{/showBookList}">書籍一覧</a>
-      <a th:href="@{/toBookForm}">書籍を追加</a>
+      <nav class="navbar">
+        <a th:href="@{/showBookList}">書籍一覧</a>
+        <a th:href="@{/toBookForm}">書籍を追加</a>
+      </nav>
     </header>
-    <h1>書籍詳細</h1>
-    <div class="container">
-      <div>タイトル：<span th:text="${book.title}">タイトル</span></div>
-      <div>著者名：<span th:text="${book.author}">著者名</span></div>
-      <hr />
-      <div th:each="review : ${book.reviews}">
-        <div th:text="${review.comment}">レビュー内容</div>
-        <div th:text="${review.rate}">評価</div>
-        <hr />
-      </div>
-      <form
-        action="book_detail.html"
-        th:action="@{/addReview}"
-        method="post"
-        th:object="${reviewForm}"
-      >
-        <input type="hidden" name="bookId" th:value="${bookId}" />
-        <div>レビューを追加</div>
-        <div>
-          <label for="rate">評価：</label>
-          <select name="rate" id="rate" th:field="*{rate}">
-            <option value="1" selected>1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-        <div>
-          <label for="comment">レビュー内容：</label><br />
-          <div class="error-message" th:errors="*{comment}">
-            レビュー内容を入力してください
+
+    <main>
+      <h1>書籍詳細</h1>
+      <div class="detail-card">
+        <p>
+          <strong>タイトル：</strong
+          ><span th:text="${book.title}">タイトル</span>
+        </p>
+        <p>
+          <strong>著者名：</strong><span th:text="${book.author}">著者名</span>
+        </p>
+
+        <div class="review-section">
+          <h2>レビュー一覧</h2>
+
+          <div th:unless="${#lists.isEmpty(book.reviews)}">
+            <div th:each="review : ${book.reviews}" class="review-card">
+              <p>
+                <strong>評価：</strong>
+                <span
+                  th:utext="${'★'.repeat(review.rate)} + ${'☆'.repeat(5 - review.rate)}"
+                  >★★★☆☆</span
+                >
+              </p>
+              <p th:text="${review.comment}">レビュー内容</p>
+            </div>
           </div>
-          <textarea
-            name="comment"
-            id="comment"
-            rows="6"
-            cols="35"
-            th:field="*{comment}"
-          ></textarea>
+          <div th:if="${#lists.isEmpty(book.reviews)}">
+            <p>レビューが存在しません。</p>
+          </div>
         </div>
-        <button>追加</button>
-      </form>
-    </div>
+
+        <div class="form-container">
+          <form
+            action="book_detail.html"
+            th:action="@{/addReview}"
+            method="post"
+            th:object="${reviewForm}"
+          >
+            <input type="hidden" name="bookId" th:value="${bookId}" />
+            <h2>レビューを追加</h2>
+
+            <div class="form-group">
+              <label for="rate">評価：</label>
+              <div class="star-rating">
+                <input type="hidden" name="rate" th:field="*{rate}" id="rate" />
+                <span class="star" data-value="1">☆</span>
+                <span class="star" data-value="2">☆</span>
+                <span class="star" data-value="3">☆</span>
+                <span class="star" data-value="4">☆</span>
+                <span class="star" data-value="5">☆</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="comment">レビュー内容：</label><br />
+              <textarea
+                name="comment"
+                id="comment"
+                rows="5"
+                th:field="*{comment}"
+              ></textarea>
+              <div class="error-message" th:errors="*{comment}">
+                レビュー内容を入力してください
+              </div>
+            </div>
+
+            <div class="form-button">
+              <button>追加</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/star_rating.js}"></script>
   </body>
 </html>
